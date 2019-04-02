@@ -44,7 +44,6 @@ pipeline {
             script {
               openshift.withCluster() {
                   openshift.selector("dc", "greeting-service").rollout().latest();
-                }
               }
             }
           }
