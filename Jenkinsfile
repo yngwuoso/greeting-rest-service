@@ -39,14 +39,31 @@ pipeline {
 	      }
 	    }
 
-        stage('Despliegue en desarrollo') {
-          steps {
-            script {
-              openshift.withCluster() {
-                  openshift.selector("dc", "greeting-service").rollout().latest();
-              }
-            }
-          }
-        }
+        stage('Promote to DEV') {
+	      steps {
+	        script {
+	          openshift.withCluster() {
+	            openshift.tag("greeting-service:latest", "greeting-service:dev")
+	          }
+	        }
+	      }
+	    }
+
+	    stage('Create DEV') {
+	      when {
+	        expression {
+	          openshift.withCluster() {
+	            return !openshift.selector('dc', 'greeting-service-dev').exists()
+	          }
+	        }
+	      }
+	      steps {
+	        script {
+	          openshift.withCluster() {
+	            openshift.newApp("greeting-service:latest", "--name=greeting-service-dev").narrow('svc').expose()
+	          }
+	        }
+	      }
+	    }
 	}
 }
