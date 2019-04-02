@@ -39,16 +39,15 @@ pipeline {
 	      }
 	    }
 
-            stage('Despliegue en desarrollo') {
-              steps {
-                script {
-                  openshift.withCluster() {
-                    openshift.withProject(env.DEV_PROJECT) {
-                      openshift.selector("dc", "greeting-service").rollout().latest();
-                    }
-                  }
+        stage('Despliegue en desarrollo') {
+          steps {
+            script {
+              openshift.withCluster() {
+                  openshift.selector("dc", "greeting-service").rollout().latest();
                 }
               }
             }
+          }
+        }
 	}
 }
