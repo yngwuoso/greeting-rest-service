@@ -15,7 +15,7 @@ pipeline {
 	      when {
 	        expression {
 	          openshift.withCluster() {
-	            return !openshift.selector("bc", "bc_ess").exists();
+	            return !openshift.selector("bc", "bcess").exists();
 	          }
 	        }
 	      }
@@ -23,7 +23,7 @@ pipeline {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.newBuild("--name=bc_ess", "registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift", "--binary=true")
+	            openshift.newBuild("--name=bcess", "registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift", "--binary=true")
 	          }
 	        }
 	      }
@@ -33,7 +33,7 @@ pipeline {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.selector("bc", "bc_ess").startBuild("--from-file=target/greeting-rest-service.jar", "--wait")
+	            openshift.selector("bc", "bcess").startBuild("--from-file=target/greeting-rest-service.jar", "--wait")
 	          }
 	        }
 	      }
