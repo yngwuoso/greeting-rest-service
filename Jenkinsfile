@@ -60,7 +60,7 @@ pipeline {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.newApp("greeting-service:latest", "--name=greeting-service-dev").narrow('svc').expose()
+	            openshift.newApp("greeting-service-dev:latest", "--name=greeting-service-dev").narrow('svc').expose()
 	          }
 	        }
 	      }
