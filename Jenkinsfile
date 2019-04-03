@@ -29,7 +29,7 @@ pipeline {
 	      }
 	    }
 
-	    stage('Creación de la imagen') {
+	    stage('Creación de la imagen única') {
 	      steps {
 	        script {
 	          openshift.withCluster() {
@@ -39,7 +39,7 @@ pipeline {
 	      }
 	    }
 
-        stage('Promote to DEV') {
+        stage('Promocionar a DEV') {
 	      steps {
 	        script {
 	          openshift.withCluster() {
@@ -49,7 +49,7 @@ pipeline {
 	      }
 	    }
 
-	    stage('Create DEV') {
+	    stage('Crear entorno DEV') {
 	      when {
 	        expression {
 	          openshift.withCluster() {
@@ -60,7 +60,7 @@ pipeline {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.newApp("greeting-service:latest", "--name=greeting-service-dev").narrow('svc').expose()
+	            openshift.newApp("greeting-service:dev", "--name=greeting-service-dev").narrow('svc').expose()
 	          }
 	        }
 	      }
