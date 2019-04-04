@@ -18,12 +18,16 @@ public class GreetingController {
 	@Value("${config.greeting}")
 	private String greeting;
 
+	@Value("${config.revision}")
+	private String revision;
+
 	@RequestMapping(value = "/greeting", method = RequestMethod.GET)
 	public GreetingBean home(Model model, HttpServletRequest request) {
 
 		GreetingBean greetingBean = new GreetingBean();
 		greetingBean.setGreeting(greeting);
 		greetingBean.setTimeStamp(new Date().getTime());
+		greetingBean.setRevision(revision);
 
 		return greetingBean;
 	}

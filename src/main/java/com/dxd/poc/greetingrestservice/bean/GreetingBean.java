@@ -4,6 +4,7 @@ public class GreetingBean {
 
 	private String greeting;
 	private long timeStamp;
+	private String revision;
 
 	public String getGreeting() {
 		return greeting;
@@ -19,5 +20,13 @@ public class GreetingBean {
 
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+
+	public String getRevision() {
+		return revision;
+	}
+
+	public void setRevision(String revision) {
+		this.revision = revision;
 	}
 }
