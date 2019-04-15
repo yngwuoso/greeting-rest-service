@@ -28,11 +28,6 @@ pipeline {
 		}
 		
 		stage('Construcción del JAR') {
-			when {
-              expression {
-                return env.GIT_BRANCH == 'origin/develop'
-           	  }
-            }
 			steps {
 				sh "mvn install -DskipTests=true"
 			}
@@ -57,11 +52,6 @@ pipeline {
 	    }
 
 	    stage('Creación de la imagen única') {
-		  when {
-            expression {
-              return env.GIT_BRANCH == 'origin/develop'
-         	}
-          }
 	      steps {
 	        script {
 	          openshift.withCluster() {
@@ -72,12 +62,6 @@ pipeline {
 	    }
 
         stage('Promocionar a DES') {
-          when {
-            expression {
-              return env.GIT_BRANCH == 'origin/develop'
-           	}
-          }
-
 	      steps {
 	        script {
 	          openshift.withCluster() {
