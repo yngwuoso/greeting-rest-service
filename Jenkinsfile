@@ -39,24 +39,24 @@ pipeline {
 	      }
 	    }
 
-        stage('Promocionar a DEV') {
+        stage('Promocionar a DES') {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.withProject('picasso-dev') {
-	              openshift.tag("picasso-cicd/greeting-service:latest", "greeting-service:dev")
+	            openshift.withProject('picasso-des') {
+	              openshift.tag("picasso-cicd/greeting-service:latest", "greeting-service:des")
 	            }
 	          }
 	        }
 	      }
 	    }
 
-	    stage('Crear entorno DEV') {
+	    stage('Crear entorno DES') {
 	      when {
 	        expression {
 	          openshift.withCluster() {
-	            openshift.withProject('picasso-dev') {
-	              return !openshift.selector('dc', 'greeting-service-dev').exists()
+	            openshift.withProject('picasso-des') {
+	              return !openshift.selector('dc', 'greeting-service-des').exists()
 	            }
 	          }
 	        }
@@ -64,8 +64,8 @@ pipeline {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.withProject('picasso-dev') {
-	              openshift.newApp("greeting-service:dev", "--name=greeting-service-dev").narrow('svc').expose()
+	            openshift.withProject('picasso-des') {
+	              openshift.newApp("greeting-service:des", "--name=greeting-service-des").narrow('svc').expose()
 	            }
 	          }
 	        }
