@@ -71,5 +71,44 @@ pipeline {
 	        }
 	      }
 	    }
+
+		stage('¿Promoción a PRE?') {
+			steps {
+				input message: "¿Promocionamos a PRE?", ok: "Aceptar"
+			}
+		}
+
+	    stage('Promocionar a PRE') {
+	      steps {
+	        script {
+	          openshift.withCluster() {
+	            openshift.withProject('picasso-pre') {
+	              openshift.tag("picasso-des/greeting-service:des", "greeting-service:pre")
+	            }
+	          }
+	        }
+	      }
+	    }
+	    
+	    stage('Crear entorno PRE') {
+	      when {
+	        expression {
+	          openshift.withCluster() {
+	            openshift.withProject('picasso-pre') {
+	              return !openshift.selector('dc', 'greeting-service-pre').exists()
+	            }
+	          }
+	        }
+	      }
+	      steps {
+	        script {
+	          openshift.withCluster() {
+	            openshift.withProject('picasso-pre') {
+	              openshift.newApp("greeting-service:pre", "--name=greeting-service-pre").narrow('svc').expose()
+	            }
+	          }
+	        }
+	      }
+	    }
 	}
 }
