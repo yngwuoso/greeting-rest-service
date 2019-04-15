@@ -43,7 +43,9 @@ pipeline {
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.tag("greeting-service:latest", "greeting-service:dev")
+	            openshift.withProject('picasso-dev') {
+	              openshift.tag("picasso-cicd/greeting-service:latest", "greeting-service:dev")
+	            }
 	          }
 	        }
 	      }
@@ -53,14 +55,18 @@ pipeline {
 	      when {
 	        expression {
 	          openshift.withCluster() {
-	            return !openshift.selector('dc', 'greeting-service-dev').exists()
+	            openshift.withProject('picasso-dev') {
+	              return !openshift.selector('dc', 'greeting-service-dev').exists()
+	            }
 	          }
 	        }
 	      }
 	      steps {
 	        script {
 	          openshift.withCluster() {
-	            openshift.newApp("greeting-service:dev", "--name=greeting-service-dev").narrow('svc').expose()
+	            openshift.withProject('picasso-dev') {
+	              openshift.newApp("greeting-service:dev", "--name=greeting-service-dev").narrow('svc').expose()
+	            }
 	          }
 	        }
 	      }
