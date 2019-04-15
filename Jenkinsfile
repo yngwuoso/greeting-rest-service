@@ -51,27 +51,6 @@ pipeline {
 	      }
 	    }
 
-	    stage('Crear entorno DES') {
-	      when {
-	        expression {
-	          openshift.withCluster() {
-	            openshift.withProject('picasso-des') {
-	              return !openshift.selector('dc', 'greeting-service-des').exists()
-	            }
-	          }
-	        }
-	      }
-	      steps {
-	        script {
-	          openshift.withCluster() {
-	            openshift.withProject('picasso-des') {
-	              openshift.newApp("greeting-service:des", "--name=greeting-service-des").narrow('svc').expose()
-	            }
-	          }
-	        }
-	      }
-	    }
-
 		stage('¿Promoción a PRE?') {
 			steps {
 				input message: "¿Promocionamos a PRE?", ok: "Aceptar"
@@ -84,27 +63,6 @@ pipeline {
 	          openshift.withCluster() {
 	            openshift.withProject('picasso-pre') {
 	              openshift.tag("picasso-des/greeting-service:des", "greeting-service:pre")
-	            }
-	          }
-	        }
-	      }
-	    }
-	    
-	    stage('Crear entorno PRE') {
-	      when {
-	        expression {
-	          openshift.withCluster() {
-	            openshift.withProject('picasso-pre') {
-	              return !openshift.selector('dc', 'greeting-service-pre').exists()
-	            }
-	          }
-	        }
-	      }
-	      steps {
-	        script {
-	          openshift.withCluster() {
-	            openshift.withProject('picasso-pre') {
-	              openshift.newApp("greeting-service:pre", "--name=greeting-service-pre").narrow('svc').expose()
 	            }
 	          }
 	        }
