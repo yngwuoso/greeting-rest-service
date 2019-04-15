@@ -11,6 +11,29 @@ pipeline {
 				sh "echo Rama GIT :: $GIT_BRANCH"
 			}
 		}
+		
+		stage('Ejecución CI') {
+			when {
+              expression {
+                return env.GIT_BRANCH == 'origin/develop'
+           	  }
+            }
+			steps {
+				sh "echo Ejecución CI"
+			}
+		}
+		
+		stage('Ejecución CD') {
+			when {
+              expression {
+                return env.GIT_BRANCH == 'origin/master'
+           	  }
+            }
+			steps {
+				sh "echo Ejecución CD"
+			}
+		}
+		
 		stage('Construcción del JAR') {
 			steps {
 				sh "mvn install -DskipTests=true"
