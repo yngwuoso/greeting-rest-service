@@ -46,6 +46,12 @@ pipeline {
 	    }
 
         stage('Promocionar a DES') {
+          when {
+            expression {
+              return env.GIT_BRANCH == 'origin/develop'
+           	}
+          }
+
 	      steps {
 	        script {
 	          openshift.withCluster() {
@@ -58,12 +64,22 @@ pipeline {
 	    }
 
 		stage('¿Promoción a PRE?') {
+			when {
+              expression {
+                return env.GIT_BRANCH == 'origin/master'
+           	  }
+            }
 			steps {
 				input message: "¿Promocionamos a PRE?", ok: "Aceptar"
 			}
 		}
 
 	    stage('Promocionar a PRE') {
+	      when {
+            expression {
+              return env.GIT_BRANCH == 'origin/master'
+         	}
+          }
 	      steps {
 	        script {
 	          openshift.withCluster() {
