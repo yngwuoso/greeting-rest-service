@@ -5,12 +5,6 @@ pipeline {
 	}
 
 	stages {
-		stage('Log de variables') {
-			steps {
-				sh "echo Rama GIT :: $GIT_BRANCH"
-			}
-		}
-
 		stage('Construcción del JAR') {
 			steps {
 				sh "mvn install -DskipTests=true"
