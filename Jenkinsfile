@@ -100,33 +100,5 @@ pipeline {
 	        }
 	      }
 	    }
-
-		stage('¿Promoción a PRO?') {
-			when {
-              expression {
-                return env.GIT_BRANCH == 'origin/master'
-           	  }
-            }
-			steps {
-				input message: "¿Promocionamos a PRO?", ok: "Aceptar"
-			}
-		}
-
-	    stage('Promocionar a PRO') {
-	      when {
-            expression {
-              return env.GIT_BRANCH == 'origin/master'
-         	}
-          }
-	      steps {
-	        script {
-	          openshift.withCluster() {
-	            openshift.withProject('picasso-pro') {
-	              openshift.tag("picasso-pre/greeting-service:pre", "greeting-service:pro")
-	            }
-	          }
-	        }
-	      }
-	    }
 	}
 }
