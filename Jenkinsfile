@@ -65,7 +65,7 @@ pipeline {
       }
     }
 
-    stage('Promote::DES') {
+    stage('Promote to DES') {
       steps {
         script {
           openshift.withCluster() {
@@ -77,7 +77,7 @@ pipeline {
       }
     }
 
-    stage('Promote::PRE?') {
+    stage('Promote to PRE?') {
       when {
         expression {
           return env.GIT_BRANCH == 'origin/master'
@@ -88,7 +88,7 @@ pipeline {
       }
     }
 
-    stage('Promote::PRE') {
+    stage('Promote to PRE') {
       when {
         expression {
           return env.GIT_BRANCH == 'origin/master'
