@@ -4,6 +4,11 @@ pipeline {
 		label 'maven'
 	}
 
+        environment {
+           IMAGE = readMavenPom().getArtifactId()
+           VERSION = readMavenPom().getVersion()
+        }
+
 	stages {
 		stage('Ejecución CI') {
 			when {
@@ -12,7 +17,7 @@ pipeline {
            	  }
             }
 			steps {
-				sh "echo Ejecución CI"
+				sh "echo Ejecución CI :: $IMAGE-$VERSION"
 			}
 		}
 		
@@ -23,7 +28,7 @@ pipeline {
            	  }
             }
 			steps {
-				sh "echo Ejecución CD"
+				sh "echo Ejecución CD :: $IMAGE-$VERSION"
 			}
 		}
 		
