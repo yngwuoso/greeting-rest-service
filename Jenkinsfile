@@ -100,6 +100,7 @@ pipeline {
 	          openshift.withCluster() {
 	            openshift.withProject('picasso-pre') {
 	              openshift.tag("picasso-des/greeting-service:des", "greeting-service:pre")
+                      openshift.tag("greeting-service:pre", "greeting-service:$VERSION")
 	            }
 	          }
 	        }
