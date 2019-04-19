@@ -98,8 +98,36 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject('picasso-pre') {
-              openshift.tag("picasso-des/greeting-service:des", "greeting-service:pre")
-              openshift.tag("greeting-service:pre", "greeting-service:$VERSION")
+              openshift.tag("picasso-des/greeting-service:des", "greeting-service:$VERSION")
+              openshift.tag("greeting-service:$VERSION", "greeting-service:pre")
+            }
+          }
+        }
+      }
+    }
+
+    stage('Promote to PRO?') {
+      when {
+        expression {
+          return env.GIT_BRANCH == 'origin/master'
+        }
+      }
+      steps {
+        input message: "¿Promocionamos a PRO?", ok: "Aceptar"
+      }
+    }
+
+    stage('Promote to PRO') {
+      when {
+        expression {
+          return env.GIT_BRANCH == 'origin/master'
+        }
+      }
+      steps {
+        script {
+          openshift.withCluster() {
+            openshift.withProject('picasso-pro') {
+              openshift.tag("picasso-pre/greeting-service:$VERSION", "greeting-service:pro")
             }
           }
         }
