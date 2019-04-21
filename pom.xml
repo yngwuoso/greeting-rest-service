@@ -10,7 +10,7 @@
 
 	<groupId>com.dxd.poc</groupId>
 	<artifactId>greeting-rest-service</artifactId>
-	<version>1.59</version>
+	<version>1.62</version>
 	<name>greeting-rest-service</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -42,13 +42,16 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5.3</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
 	<scm>
 		<developerConnection>scm:git:https://github.com/yngwuoso/greeting-rest-service.git</developerConnection>
-	  <tag>greeting-rest-service-1.59</tag>
+	  <tag>v1.62</tag>
   </scm>
 
 </project>
