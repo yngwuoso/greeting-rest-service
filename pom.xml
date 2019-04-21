@@ -10,7 +10,7 @@
 
 	<groupId>com.dxd.poc</groupId>
 	<artifactId>greeting-rest-service</artifactId>
-	<version>1.60-SNAPSHOT</version>
+	<version>1.61-SNAPSHOT</version>
 	<name>greeting-rest-service</name>
 	<description>Demo project for Spring Boot</description>
 
