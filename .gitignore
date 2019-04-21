@@ -1,4 +1,6 @@
 HELP.md
+pom.xml.releaseBackup
+release.properties
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
