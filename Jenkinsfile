@@ -32,22 +32,8 @@ pipeline {
     }
 		
     stage('Build stage') {
-      parallel {
-        stage('Package') { 
-          steps {
-            sh "mvn install -DskipTests=true"
-          }
-        }
-        stage('Unit testing') {
-          steps {
-            sh "mvn test"
-          }
-          post {
-            success {
-              junit 'target/surefire-reports/**/*.xml' 
-            }
-          }
-        }
+      steps {
+        sh "mvn install -DskipTests=true"
       }
     } 
 
