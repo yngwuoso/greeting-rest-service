@@ -10,7 +10,7 @@
 
 	<groupId>com.dxd.poc</groupId>
 	<artifactId>greeting-rest-service</artifactId>
-	<version>1.60</version>
+	<version>1.61-SNAPSHOT</version>
 	<name>greeting-rest-service</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -48,7 +48,7 @@
 
 	<scm>
 		<developerConnection>scm:git:https://github.com/yngwuoso/greeting-rest-service.git</developerConnection>
-	  <tag>greeting-rest-service-1.60</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 </project>
